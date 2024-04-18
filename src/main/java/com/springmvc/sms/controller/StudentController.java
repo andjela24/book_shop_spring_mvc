@@ -3,24 +3,19 @@ package com.springmvc.sms.controller;
 import com.springmvc.sms.dto.StudentDto;
 import com.springmvc.sms.service.impl.StudentService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class StudentController {
 
-    private StudentService studentService;
-
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    private final StudentService studentService;
 
     // handler method to handle list students request
     @GetMapping({"/students"})
@@ -54,7 +49,7 @@ public class StudentController {
     }
 
     // handler method to handle edit student request
-    @GetMapping("/students/{studentId}/edit")
+    @GetMapping("/students/edit/{studentId}")
     public String editStudent(@PathVariable("studentId") Long studentId,
                               Model model){
         StudentDto student = studentService.getStudentById(studentId);
@@ -78,7 +73,7 @@ public class StudentController {
     }
 
     // Handler method to handle delete student request
-    @GetMapping("/students/{studentId}/delete")
+    @GetMapping("/students/delete/{studentId}")
     public String deleteStudent(@PathVariable("studentId") Long studentId){
         studentService.deleteStudent(studentId);
         return "redirect:/students";
