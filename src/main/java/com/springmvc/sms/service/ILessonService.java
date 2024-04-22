@@ -9,6 +9,6 @@ public interface ILessonService {
     LessonDto createLesson(LessonDto lessonDto);
     List<LessonDto> getAllLessons();
     LessonDto getLessonById(Long lessonId);
-    LessonDto updateLesson(Long lessonId,LessonDto lessonDto);
+    LessonDto updateLesson(LessonDto lessonDto);
     void deleteLesson(Long lessonId);
 }

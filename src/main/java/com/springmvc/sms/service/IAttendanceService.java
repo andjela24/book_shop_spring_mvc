@@ -9,6 +9,6 @@ public interface IAttendanceService {
     AttendanceDto createAttendance(AttendanceDto attendanceDto);
     List<AttendanceDto> getAllAttendances();
     AttendanceDto getAttendanceById(Long attendanceId);
-    AttendanceDto updateAttendance(Long attendanceId, AttendanceDto attendanceDto);
+    AttendanceDto updateAttendance(AttendanceDto attendanceDto);
     void deleteAttendance(Long attendanceId);
 }

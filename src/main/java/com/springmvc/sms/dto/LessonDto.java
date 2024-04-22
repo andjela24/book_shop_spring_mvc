@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class LessonDto {
     private Long id;
-    private Date date;
+    private LocalDateTime date;
     private Teacher teacher;
     private Subject subject;
 }

@@ -4,11 +4,15 @@ import com.springmvc.sms.dto.AttendanceDto;
 import com.springmvc.sms.dto.LessonDto;
 import com.springmvc.sms.entity.Attendance;
 import com.springmvc.sms.entity.Lesson;
+import com.springmvc.sms.entity.Subject;
+import com.springmvc.sms.entity.Teacher;
 import com.springmvc.sms.excetion.DataNotValidException;
 import com.springmvc.sms.excetion.ResourceNotFoundException;
 import com.springmvc.sms.mapper.AttendanceMapper;
 import com.springmvc.sms.mapper.LessonMapper;
 import com.springmvc.sms.repository.LessonRepository;
+import com.springmvc.sms.repository.SubjectRepository;
+import com.springmvc.sms.repository.TeacherRepository;
 import com.springmvc.sms.service.ILessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,9 +26,17 @@ import java.util.List;
 public class LessonService implements ILessonService {
 
     private final LessonRepository lessonRepository;
+    private final TeacherRepository teacherRepository;
+    private SubjectRepository subjectRepository;
+
 
     @Override
     public LessonDto createLesson(LessonDto lessonDto) {
+        Teacher teacher = teacherRepository.findById(lessonDto.getTeacher().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tecaher not found with ID: " + lessonDto.getTeacher().getId()));
+        Subject subject = subjectRepository.findById(lessonDto.getSubject().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + lessonDto.getSubject().getId()));
+
         if (lessonDto.getTeacher() == null) {
             throw new DataNotValidException("Teacher must exists");
         }
@@ -33,8 +45,8 @@ public class LessonService implements ILessonService {
         }
         Lesson lesson = Lesson.builder()
                 .date(lessonDto.getDate())
-                .teacher(lessonDto.getTeacher())
-                .subject(lessonDto.getSubject())
+                .teacher(teacher)
+                .subject(subject)
                 .build();
 
         lessonRepository.save(lesson);
@@ -68,8 +80,8 @@ public class LessonService implements ILessonService {
     }
 
     @Override
-    public LessonDto updateLesson(Long lessonId, LessonDto lessonDto) {
-        Lesson foundLesson = lessonRepository.findById(lessonId).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + lessonId + " could not be updated"));
+    public LessonDto updateLesson(LessonDto lessonDto) {
+        Lesson foundLesson = lessonRepository.findById(lessonDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + lessonDto.getId() + " could not be updated"));
 
         boolean isChanged = false;
 
@@ -84,6 +96,12 @@ public class LessonService implements ILessonService {
         } else {
             isChanged = true;
             foundLesson.setSubject(lessonDto.getSubject());
+        }
+        if (lessonDto.getDate() == null) {
+            throw new DataNotValidException("Date must exists");
+        } else {
+            isChanged = true;
+            foundLesson.setDate(lessonDto.getDate());
         }
 
         if (isChanged) {

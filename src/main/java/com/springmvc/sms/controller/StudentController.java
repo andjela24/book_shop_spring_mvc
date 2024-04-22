@@ -1,8 +1,6 @@
 package com.springmvc.sms.controller;
 
-import com.springmvc.sms.dto.LessonDto;
 import com.springmvc.sms.dto.StudentDto;
-import com.springmvc.sms.service.impl.LessonService;
 import com.springmvc.sms.service.impl.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -74,11 +72,9 @@ public class StudentController {
                                 BindingResult result,
                                 Model model) {
         studentDto.setId(studentId);
-        System.out.println("Student DTO: " + studentDto.getId());
         if (result.hasErrors()) {
             model.addAttribute("student", studentDto);
             return "edit_student";
-//            return "Ovde puca";
         }
         studentDto.setId(studentId);
         studentService.updateStudent(studentDto);

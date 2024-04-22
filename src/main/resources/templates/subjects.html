@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand mr-auto" href="#">SMS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/students}" role="button"
+                       aria-expanded="false">Studenti</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/students/new}">Novi student</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/students}">Lista studenata</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/attendances}" role="button"
+                       aria-expanded="false">Prisustva</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/attendances/new}">Novo prisustvo</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/attendances}">Lista prisustva</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/teachers}" role="button"
+                       aria-expanded="false">Profesori</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/teachers/new}">Novi profesor</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/teachers}">Lista profesora</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/lessons}" role="button"
+                       aria-expanded="false">Predavanja</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/lessons/new}">Novo predavanje</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/lessons}">Lista predavanja</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/subjects}" role="button"
+                       aria-expanded="false">Predmeti</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/subjects/new}">Novi predmet</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/subjects}">Lista predmeta</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-4">Lista predmeta</h2>
+        </div>
+        <div class="col text-right">
+            <a th:href="@{/subjects/new}" class="btn btn-secondary text-white">
+                <i class="fas fa-user-plus mr-1"></i>
+                Kreiraj predmet
+            </a>
+        </div>
+    </div>
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>Naziv</th>
+            <th>Izmeni</th>
+            <th>Obriši</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subject : ${subjects}">
+            <td th:text="${subject.name}"></td>
+            <td>
+                <div class="d-flex justify-content-center">
+                    <a th:href="@{/subjects/edit/{id}(id=${subject.id})}" class="btn btn-primary btn-sm text-white">
+                        <i class="fas fa-user-edit mr-1"></i>
+                        Izmeni
+                    </a>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex justify-content-center">
+                    <a th:href="@{/subjects/delete/{id}(id=${subject.id})}" class="btn btn-danger btn-sm text-white">
+                        <i class="fas fa-user-times mr-1"></i>
+                        Obriši
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -7,6 +7,7 @@ public class TeacherMapper {
 
     public static TeacherDto mapToTeacherDto(Teacher teacher) {
         TeacherDto teacherDto = new TeacherDto(
+                teacher.getId(),
                 teacher.getFirstName(),
                 teacher.getLastName(),
                 teacher.getPhoneNumber(),
@@ -17,6 +18,7 @@ public class TeacherMapper {
     }
     public static Teacher mapToTeacher(TeacherDto teacherDto) {
         Teacher teacher = new Teacher(
+                teacherDto.getId(),
                 teacherDto.getFirstName(),
                 teacherDto.getLastName(),
                 teacherDto.getPhoneNumber(),

@@ -1,7 +1,11 @@
 package com.springmvc.sms.controller;
 
 import com.springmvc.sms.dto.LessonDto;
+import com.springmvc.sms.dto.SubjectDto;
+import com.springmvc.sms.dto.TeacherDto;
 import com.springmvc.sms.service.impl.LessonService;
+import com.springmvc.sms.service.impl.SubjectService;
+import com.springmvc.sms.service.impl.TeacherService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,25 +22,36 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LessonController {
     private final LessonService lessonService;
+    private final TeacherService teacherService;
+    private final SubjectService subjectService;
 
-    // handler method to handle list lessons request
     @GetMapping({"/lessons"})
     public String listLessons(Model model){
         List<LessonDto> lessons = lessonService.getAllLessons();
+        List<TeacherDto> teachers = teacherService.getAllTeachers();
+        List<SubjectDto> subjects = subjectService.getAllSubjects();
+
         model.addAttribute("lessons", lessons);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("subjects", subjects);
+
         return "lessons";
     }
 
-    // handler method to handle new lesson request
     @GetMapping("/lessons/new")
     public String newLesson(Model model){
-        // lesson model object to store lesson form data
+        List<TeacherDto> teachers = teacherService.getAllTeachers();
+        List<SubjectDto> subjects = subjectService.getAllSubjects();
+
         LessonDto lessonDto = new LessonDto();
+
         model.addAttribute("lesson", lessonDto);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("subjects", subjects);
+
         return "create_lesson";
     }
 
-    // handler method to handle save lesson form submit request
     @PostMapping("/lessons")
     public String saveLesson(@Valid @ModelAttribute("lesson") LessonDto lesson,
                                  BindingResult result,
@@ -50,16 +65,20 @@ public class LessonController {
         return "redirect:/lessons";
     }
 
-    // handler method to handle edit lesson request
     @GetMapping("/lessons/edit/{lessonId}")
     public String editLesson(@PathVariable("lessonId") Long lessonId,
                                  Model model){
         LessonDto lesson = lessonService.getLessonById(lessonId);
+        List<TeacherDto> teachers = teacherService.getAllTeachers();
+        List<SubjectDto> subjects = subjectService.getAllSubjects();
+
         model.addAttribute("lesson", lesson);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("subjects", subjects);
+
         return "edit_lesson";
     }
 
-    // handler method to handle edit lesson form submit request
     @PostMapping("/lessons/{lessonId}")
     public String updateLesson(@PathVariable("lessonId") Long lessonId,
                                    @Valid @ModelAttribute("lesson") LessonDto lessonDto,
@@ -69,8 +88,8 @@ public class LessonController {
             model.addAttribute("lesson", lessonDto);
             return "edit_lesson";
         }
-//        lessonDto.setId(lessonId);
-        lessonService.updateLesson(lessonId, lessonDto);
+        lessonDto.setId(lessonId);
+        lessonService.updateLesson(lessonDto);
         return "redirect:/lessons";
     }
 

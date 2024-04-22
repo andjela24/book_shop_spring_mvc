@@ -1,6 +1,8 @@
 package com.springmvc.sms.controller;
 
+import com.springmvc.sms.dto.StudentDto;
 import com.springmvc.sms.dto.SubjectDto;
+import com.springmvc.sms.service.impl.StudentService;
 import com.springmvc.sms.service.impl.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +20,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;
+    private final StudentService studentService;
 
-    // handler method to handle list subjects request
     @GetMapping({"/subjects"})
     public String listSubjects(Model model){
         List<SubjectDto> subjects = subjectService.getAllSubjects();
+        List<StudentDto> students = studentService.getAllStudents();
+
         model.addAttribute("subjects", subjects);
+        model.addAttribute("students", students);
+
         return "subjects";
     }
 

@@ -7,5 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubjectDto {
+    private Long id;
     private String name;
 }

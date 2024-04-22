@@ -6,6 +6,7 @@ import com.springmvc.sms.entity.Subject;
 public class SubjectMapper {
     public static SubjectDto mapToSubjectDto(Subject subject) {
         SubjectDto subjectDto = new SubjectDto(
+                subject.getId(),
                 subject.getName()
         );
         return subjectDto;
@@ -13,6 +14,7 @@ public class SubjectMapper {
 
     public static Subject mapToSubject(SubjectDto subjectDto) {
         Subject subject = new Subject(
+                subjectDto.getId(),
                 subjectDto.getName()
         );
         return subject;

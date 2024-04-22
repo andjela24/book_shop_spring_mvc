@@ -42,8 +42,6 @@ public class AttendanceService implements IAttendanceService {
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson not found with ID: " + attendanceDto.getLesson().getId()));
 
         Attendance attendance = Attendance.builder()
-//                .student(attendanceDto.getStudent())
-//                .lesson(attendanceDto.getLesson())
                 .student(student)
                 .lesson(lesson)
                 .isPresent(attendanceDto.isPresent())
@@ -84,8 +82,8 @@ public class AttendanceService implements IAttendanceService {
     }
 
     @Override
-    public AttendanceDto updateAttendance(Long attendanceId, AttendanceDto attendanceDto) {
-        Attendance foundAttendance = attendanceRepository.findById(attendanceId).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + attendanceId + " could not be updated"));
+    public AttendanceDto updateAttendance(AttendanceDto attendanceDto) {
+        Attendance foundAttendance = attendanceRepository.findById(attendanceDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + attendanceDto.getId() + " could not be updated"));
 
         boolean isChanged = false;
 

@@ -17,34 +17,57 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand mr-auto" href="#">SMS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/students/new}">Novi student</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/students}" role="button"
+                       aria-expanded="false">Studenti</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/students/new}">Novi student</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/students}">Lista studenata</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/students}">Lista studenata</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/attendances}" role="button"
+                       aria-expanded="false">Prisustva</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/attendances/new}">Novo prisustvo</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/attendances}">Lista prisustva</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/attendances/new}">Novo prisustvo</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/teachers}" role="button"
+                       aria-expanded="false">Profesori</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/teachers/new}">Novi profesor</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/teachers}">Lista profesora</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/attendances}">Lista prisustva</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/lessons}" role="button"
+                       aria-expanded="false">Predavanja</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/lessons/new}">Novo predavanje</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/lessons}">Lista predavanja</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/teachers/new}">Novi profesor</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/teachers}">Lista profesora</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-current="page" th:href="@{/subjects}" role="button"
+                       aria-expanded="false">Predmeti</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" th:href="@{/subjects/new}">Novi predmet</a>
+                        <a class="dropdown-item" aria-current="page" th:href="@{/subjects}">Lista predmeta</a>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 <div class="container col-md-8 my-4">
     <div class="card">
         <div class="card-header">
@@ -58,14 +81,16 @@
                 <div class="form-group">
                     <label for="student">Izaberite studenta:</label>
                     <select class="form-control" id="student" name="studentId" th:field="*{student.id}">
-                        <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName + ' ' + student.lastName}"></option>
+                        <option th:each="student : ${students}" th:value="${student.id}"
+                                th:text="${student.firstName + ' ' + student.lastName}"></option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="lesson">Izaberite čas:</label>
                     <select class="form-control" id="lesson" name="lessonId" th:field="*{lesson.id}">
-                        <option th:each="lesson : ${lessons}" th:value="${lesson.id}" th:text="${lesson.subject.name + ' - ' + #dates.format(lesson.date, 'dd.MM.yyyy')}"></option>
+                        <option th:each="lesson : ${lessons}" th:value="${lesson.id}"
+                                th:text="${lesson.subject.name + ' - ' + #temporals.format(lesson.date, 'dd.MM.yyyy')}"></option>
                     </select>
                 </div>
                 <div class="form-check">

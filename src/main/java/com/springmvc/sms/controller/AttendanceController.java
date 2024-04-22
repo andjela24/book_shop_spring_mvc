@@ -68,7 +68,13 @@ public class AttendanceController {
     public String editAttendance(@PathVariable("attendanceId") Long attendanceId,
                                  Model model) {
         AttendanceDto attendance = attendanceService.getAttendanceById(attendanceId);
+        List<StudentDto> students = studentService.getAllStudents();
+        List<LessonDto> lessons = lessonService.getAllLessons();
+
         model.addAttribute("attendance", attendance);
+        model.addAttribute("students", students);
+        model.addAttribute("lessons", lessons);
+
         return "edit_attendance";
     }
 
@@ -77,11 +83,12 @@ public class AttendanceController {
                                    @Valid @ModelAttribute("attendance") AttendanceDto attendanceDto,
                                    BindingResult result,
                                    Model model) {
+        attendanceDto.setId(attendanceId);
         if (result.hasErrors()) {
             model.addAttribute("attendance", attendanceDto);
             return "edit_attendance";
         }
-        attendanceService.updateAttendance(attendanceId, attendanceDto);
+        attendanceService.updateAttendance(attendanceDto);
         return "redirect:/attendances";
     }
 

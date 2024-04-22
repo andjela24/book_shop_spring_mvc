@@ -8,6 +8,7 @@ import lombok.Setter;
 import com.springmvc.sms.commons.BaseEntity;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @SuperBuilder(toBuilder = true)
@@ -22,7 +23,7 @@ public class Lesson extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
@@ -32,9 +33,4 @@ public class Lesson extends BaseEntity {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    public Lesson(Date date, Teacher teacher, Subject subject) {
-        this.date = date;
-        this.teacher = teacher;
-        this.subject = subject;
-    }
 }
