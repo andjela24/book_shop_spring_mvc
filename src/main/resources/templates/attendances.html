@@ -96,7 +96,7 @@
             <td th:text="${attendance.student.firstName + ' ' + attendance.student.lastName}"></td>
             <td th:text="${attendance.lesson.subject.name}"></td>
             <td th:text="${#temporals.format(attendance.lesson.date, 'dd.MM.yyyy')}"></td>
-            <td th:text="${attendance.id}"></td>
+            <td th:text="${attendance.isPresent}"></td>
             <td>
                 <div class="d-flex justify-content-center">
                     <a th:href="@{/attendances/edit/{id}(id=${attendance.id})}"
