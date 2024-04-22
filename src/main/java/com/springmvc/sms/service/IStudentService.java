@@ -11,7 +11,7 @@ public interface IStudentService {
     List<StudentDto> getAllStudents();
     StudentDto getStudentById(Long studentId);
     //    void updateStudent(StudentDto studentDto);
-    StudentDto updateStudent(Long studentId, StudentDto studentDto);
+    StudentDto updateStudent(StudentDto studentDto);
     //    void deleteStudent(Long studentId);
     void deleteStudent(Long studentId);
 

@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,30 +29,16 @@ public class BaseEntity implements Serializable {
     @ToString.Exclude
     protected Long version = 1L;
 
-    @ToString.Exclude
-    @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     protected LocalDateTime createdAt;
 
-    @ToString.Exclude
-    @LastModifiedDate
-    //   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "updated_at", updatable = true, insertable = false)
+    @Column(name = "updated_at")
     protected LocalDateTime updatedAt;
 
     @ToString.Exclude
     @Column(name = "deleted_at")
     protected LocalDateTime deletedAt;
-
-//    @CreatedBy
-//    @Column(name = "created_by", updatable = false)
-//    @ToString.Exclude
-//    private String createdBy;
-//
-//    @LastModifiedBy
-//    @Column(name = "updated_by", updatable = true)
-//    @ToString.Exclude
-//    private String updatedBy;
 
 }
 

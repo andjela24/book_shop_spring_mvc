@@ -18,5 +18,5 @@ public class StudentDto {
     private String lastName;
     private String email;
     //Trebalo bi da bude SubjectDto
-    private List<Subject> subjects;
+//    private List<Subject> subjects;
 }

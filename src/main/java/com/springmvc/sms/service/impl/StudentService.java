@@ -79,25 +79,24 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public StudentDto updateStudent(Long studentId, StudentDto studentDto) {
-        Student foundStudent = studentRepository.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + studentId + " could not be updated"));
+    public StudentDto updateStudent(StudentDto studentDto) {
+        Student foundStudent = studentRepository.findById(studentDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + studentDto.getId() + " could not be updated"));
+        Student student = StudentMapper.mapToStudent(studentDto);
 
         boolean isChanged = false;
-
-        if (studentDto.getFirstName().isEmpty() || studentDto.getFirstName().length() <= 1) {
+        if (student.getFirstName().length() < 2) {
             throw new DataNotValidException("First Name must have 2 or more characters");
         } else {
             isChanged = true;
-//            updatedWarranty.setName(warranty.getName());
             foundStudent.setFirstName(studentDto.getFirstName());
         }
-        if (studentDto.getLastName().isEmpty() || studentDto.getLastName().length() <= 1) {
+        if (student.getLastName().length() < 2) {
             throw new DataNotValidException("Last Name must have 2 or more characters");
         } else {
             isChanged = true;
             foundStudent.setLastName(studentDto.getLastName());
         }
-        if (studentDto.getEmail().isEmpty() || !studentDto.getEmail().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+        if (!student.getEmail().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
             throw new DataNotValidException("Email must be in a valid format");
         } else {
             isChanged = true;
@@ -107,7 +106,6 @@ public class StudentService implements IStudentService {
         if (isChanged) {
             foundStudent.setUpdatedAt(LocalDateTime.now());
             studentRepository.save(foundStudent);
-//            Student updatedStudent = studentRepository.save(foundStudent);
         }
         StudentDto updatedStudentDto = StudentMapper.mapToStudentDto(foundStudent);
 

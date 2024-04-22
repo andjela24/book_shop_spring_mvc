@@ -2,10 +2,14 @@ package com.springmvc.sms.service.impl;
 
 import com.springmvc.sms.dto.AttendanceDto;
 import com.springmvc.sms.entity.Attendance;
+import com.springmvc.sms.entity.Lesson;
+import com.springmvc.sms.entity.Student;
 import com.springmvc.sms.excetion.DataNotValidException;
 import com.springmvc.sms.excetion.ResourceNotFoundException;
 import com.springmvc.sms.mapper.AttendanceMapper;
 import com.springmvc.sms.repository.AttendanceRepository;
+import com.springmvc.sms.repository.LessonRepository;
+import com.springmvc.sms.repository.StudentRepository;
 import com.springmvc.sms.service.IAttendanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,19 +23,31 @@ import java.util.List;
 public class AttendanceService implements IAttendanceService {
 
     private final AttendanceRepository attendanceRepository;
+    private final StudentRepository studentRepository;
+    private final LessonRepository lessonRepository;
 
     @Override
     public AttendanceDto createAttendance(AttendanceDto attendanceDto) {
-        if (attendanceDto.getStudent() == null) {
-            throw new DataNotValidException("Student must exists");
-        }
-        if (attendanceDto.getLesson() == null) {
-            throw new DataNotValidException("Lesson must exists");
-        }
+//        if (attendanceDto.getStudent() == null) {
+//            throw new DataNotValidException("Student must exists");
+//        }
+//        if (attendanceDto.getLesson() == null) {
+//            throw new DataNotValidException("Lesson must exists");
+//        }
+
+        Student student = studentRepository.findById(attendanceDto.getStudent().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + attendanceDto.getStudent().getId()));
+
+        Lesson lesson = lessonRepository.findById(attendanceDto.getLesson().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Lesson not found with ID: " + attendanceDto.getLesson().getId()));
+
         Attendance attendance = Attendance.builder()
-                .student(attendanceDto.getStudent())
-                .lesson(attendanceDto.getLesson())
+//                .student(attendanceDto.getStudent())
+//                .lesson(attendanceDto.getLesson())
+                .student(student)
+                .lesson(lesson)
                 .isPresent(attendanceDto.isPresent())
+                .createdAt(LocalDateTime.now())
                 .build();
 
         attendanceRepository.save(attendance);
@@ -51,6 +67,9 @@ public class AttendanceService implements IAttendanceService {
 
         for (Attendance attendance : attendances) {
             AttendanceDto attendanceDto = AttendanceMapper.mapToAttendanceDto(attendance);
+            attendanceDto.setStudent(attendance.getStudent());
+            attendanceDto.setLesson(attendance.getLesson());
+            attendanceDto.setPresent(attendance.isPresent());
             foundAttendances.add(attendanceDto);
         }
 

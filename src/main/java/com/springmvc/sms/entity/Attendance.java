@@ -1,10 +1,7 @@
 package com.springmvc.sms.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import com.springmvc.sms.commons.BaseEntity;
 import lombok.experimental.SuperBuilder;
 
@@ -29,6 +26,7 @@ public class Attendance extends BaseEntity {
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
+    @Column(columnDefinition = "boolean default true")
     private boolean isPresent;
 
     public Attendance(Student student, Lesson lesson, boolean isPresent) {

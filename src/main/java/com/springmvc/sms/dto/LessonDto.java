@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonDto {
+    private Long id;
     private Date date;
     private Teacher teacher;
     private Subject subject;

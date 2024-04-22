@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Management System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
           crossorigin="anonymous">
-    <title>Student Management System</title>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand mr-auto" href="#">SMS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -45,53 +45,43 @@
         </div>
     </div>
 </nav>
-<div class="container my-4">
-    <div class="row">
-        <div class="col">
-            <h2 class="mb-4">Lista studenata</h2>
+<div class="container col-md-8 my-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-center">Kreiranje prisustva</h2>
         </div>
-        <div class="col text-right">
-            <a th:href="@{/students/new}" class="btn btn-secondary text-white">
-                <i class="fas fa-user-plus mr-1"></i>
-                Kreiraj studenta
-            </a>
+        <div class="card-body">
+            <form method="post"
+                  role="form"
+                  th:action="@{/attendances}"
+                  th:object="${attendance}">
+                <div class="form-group">
+                    <label for="student">Izaberite studenta:</label>
+                    <select class="form-control" id="student" name="studentId" th:field="*{student.id}">
+                        <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.firstName + ' ' + student.lastName}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lesson">Izaberite čas:</label>
+                    <select class="form-control" id="lesson" name="lessonId" th:field="*{lesson.id}">
+                        <option th:each="lesson : ${lessons}" th:value="${lesson.id}" th:text="${lesson.subject.name + ' - ' + #dates.format(lesson.date, 'dd.MM.yyyy')}"></option>
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isPresent" id="isPresent" value="1"
+                           th:checked="${attendance.isPresent == true}">
+                    <label class="form-check-label" for="isPresent">Prisutan</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isPresent" id="isAbsent" value="0"
+                           th:checked="${attendance.isPresent == false}">
+                    <label class="form-check-label" for="isAbsent">Odsutan</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Potvrdi prisustvo</button>
+            </form>
         </div>
     </div>
-    <table class="table table-striped table-hover table-bordered">
-        <thead class="thead-dark">
-        <tr class="text-center">
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Email</th>
-            <th>Izmeni</th>
-            <th>Obriši</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="student : ${students}">
-            <td th:text="${student.firstName}"></td>
-            <td th:text="${student.lastName}"></td>
-            <td th:text="${student.email}"></td>
-            <td>
-                <div class="d-flex justify-content-center">
-                    <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-primary btn-sm text-white">
-                        <i class="fas fa-user-edit mr-1"></i>
-                        Izmeni
-                    </a>
-                </div>
-            </td>
-            <td>
-                <div class="d-flex justify-content-center">
-                    <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn btn-danger btn-sm text-white">
-                        <i class="fas fa-user-times mr-1"></i>
-                        Obriši
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
-
 </html>
