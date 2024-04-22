@@ -33,16 +33,13 @@ public class SubjectController {
         return "subjects";
     }
 
-    // handler method to handle new subject request
     @GetMapping("/subjects/new")
     public String newSubject(Model model){
-        // subject model object to store subject form data
         SubjectDto subjectDto = new SubjectDto();
         model.addAttribute("subject", subjectDto);
         return "create_subject";
     }
 
-    // handler method to handle save subject form submit request
     @PostMapping("/subjects")
     public String saveSubject(@Valid @ModelAttribute("subject") SubjectDto subject,
                                  BindingResult result,
@@ -56,7 +53,6 @@ public class SubjectController {
         return "redirect:/subjects";
     }
 
-    // handler method to handle edit subject request
     @GetMapping("/subjects/edit/{subjectId}")
     public String editSubject(@PathVariable("subjectId") Long subjectId,
                                  Model model){
@@ -65,7 +61,6 @@ public class SubjectController {
         return "edit_subject";
     }
 
-    // handler method to handle edit subject form submit request
     @PostMapping("/subjects/{subjectId}")
     public String updateSubject(@PathVariable("subjectId") Long subjectId,
                                    @Valid @ModelAttribute("subject") SubjectDto subjectDto,
@@ -75,24 +70,14 @@ public class SubjectController {
             model.addAttribute("subject", subjectDto);
             return "edit_subject";
         }
-//        subjectDto.setId(subjectId);
-        subjectService.updateSubject(subjectId, subjectDto);
+        subjectDto.setId(subjectId);
+        subjectService.updateSubject(subjectDto);
         return "redirect:/subjects";
     }
 
-    // Handler method to handle delete subject request
     @GetMapping("/subjects/delete/{subjectId}")
     public String deleteSubject(@PathVariable("subjectId") Long subjectId){
         subjectService.deleteSubject(subjectId);
         return "redirect:/subjects";
-    }
-
-    // Handler method to handle view subject request
-    @GetMapping("/subjects/{subjectId}/view")
-    public String viewSubject(@PathVariable("subjectId") Long subjectId,
-                                 Model model){
-        SubjectDto subjectDto = subjectService.getSubjectById(subjectId);
-        model.addAttribute("subject", subjectDto);
-        return "view_subject";
     }
 }

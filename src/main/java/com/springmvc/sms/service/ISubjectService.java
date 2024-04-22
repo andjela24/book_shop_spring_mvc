@@ -11,6 +11,6 @@ public interface ISubjectService {
     SubjectDto createSubject(SubjectDto subjectDto);
     List<SubjectDto> getAllSubjects();
     SubjectDto getSubjectById(Long subjectId);
-    SubjectDto updateSubject(Long subjectId, SubjectDto subjectDto);
+    SubjectDto updateSubject(SubjectDto subjectDto);
     void deleteSubject(Long subjectId);
 }

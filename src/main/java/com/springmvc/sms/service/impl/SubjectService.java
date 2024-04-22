@@ -61,8 +61,8 @@ public class SubjectService implements ISubjectService {
     }
 
     @Override
-    public SubjectDto updateSubject(Long subjectId, SubjectDto subjectDto) {
-        Subject foundSubject = subjectRepository.findById(subjectId).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + subjectId + " could not be updated"));
+    public SubjectDto updateSubject(SubjectDto subjectDto) {
+        Subject foundSubject = subjectRepository.findById(subjectDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + subjectDto.getId() + " could not be updated"));
 
         boolean isChanged = false;
 

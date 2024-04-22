@@ -29,9 +29,4 @@ public class Attendance extends BaseEntity {
     @Column(columnDefinition = "boolean default true")
     private boolean isPresent;
 
-    public Attendance(Student student, Lesson lesson, boolean isPresent) {
-        this.student = student;
-        this.lesson = lesson;
-        this.isPresent = isPresent;
-    }
 }

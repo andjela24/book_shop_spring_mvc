@@ -76,8 +76,8 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public TeacherDto updateTeacher(Long teacherId, TeacherDto teacherDto) {
-        Teacher foundTeacher = teacherRepository.findById(teacherId).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + teacherId + " could not be updated"));
+    public TeacherDto updateTeacher(TeacherDto teacherDto) {
+        Teacher foundTeacher = teacherRepository.findById(teacherDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + teacherDto.getId() + " could not be updated"));
 
         boolean isChanged = false;
 

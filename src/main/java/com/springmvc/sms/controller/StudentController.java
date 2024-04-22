@@ -16,20 +16,6 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
-//    private final LessonService lessonService;
-
-//    @GetMapping("/create-attendance/{studentId}")
-//    public String getCreateAttendancePage(@PathVariable("studentId") Long studentId, Model model) {
-//        StudentDto studentDto = studentService.getStudentById(studentId);
-//        System.out.println("Student ID: " + studentDto);
-//        String studentName = studentDto.getFirstName() + " " + studentDto.getLastName();
-//        List<LessonDto> lessons = lessonService.getAllLessons();
-//        model.addAttribute("lessons", lessons);
-//        model.addAttribute("studentName", studentName);
-//        model.addAttribute("studentId", studentId);
-//        model.addAttribute("student", studentDto);
-//        return "create_attendance";
-//    }
 
     @GetMapping({"/students"})
     public String listStudents(Model model) {
@@ -87,11 +73,4 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @GetMapping("/students/{studentId}/view")
-    public String viewStudent(@PathVariable("studentId") Long studentId,
-                              Model model) {
-        StudentDto studentDto = studentService.getStudentById(studentId);
-        model.addAttribute("student", studentDto);
-        return "view_student";
-    }
 }

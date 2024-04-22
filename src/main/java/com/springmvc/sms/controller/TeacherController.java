@@ -19,7 +19,6 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
 
-    // handler method to handle list teachers request
     @GetMapping({"/teachers"})
     public String listTeachers(Model model){
         List<TeacherDto> teachers = teacherService.getAllTeachers();
@@ -27,7 +26,6 @@ public class TeacherController {
         return "teachers";
     }
 
-    // handler method to handle new teacher request
     @GetMapping("/teachers/new")
     public String newTeacher(Model model){
         // teacher model object to store teacher form data
@@ -36,7 +34,6 @@ public class TeacherController {
         return "create_teacher";
     }
 
-    // handler method to handle save teacher form submit request
     @PostMapping("/teachers")
     public String saveTeacher(@Valid @ModelAttribute("teacher") TeacherDto teacher,
                                  BindingResult result,
@@ -50,7 +47,6 @@ public class TeacherController {
         return "redirect:/teachers";
     }
 
-    // handler method to handle edit teacher request
     @GetMapping("/teachers/edit/{teacherId}")
     public String editTeacher(@PathVariable("teacherId") Long teacherId,
                                  Model model){
@@ -59,7 +55,6 @@ public class TeacherController {
         return "edit_teacher";
     }
 
-    // handler method to handle edit teacher form submit request
     @PostMapping("/teachers/{teacherId}")
     public String updateTeacher(@PathVariable("teacherId") Long teacherId,
                                    @Valid @ModelAttribute("teacher") TeacherDto teacherDto,
@@ -69,24 +64,15 @@ public class TeacherController {
             model.addAttribute("teacher", teacherDto);
             return "edit_teacher";
         }
-//        teacherDto.setId(teacherId);
-        teacherService.updateTeacher(teacherId, teacherDto);
+        teacherDto.setId(teacherId);
+        teacherService.updateTeacher(teacherDto);
         return "redirect:/teachers";
     }
 
-    // Handler method to handle delete teacher request
     @GetMapping("/teachers/delete/{teacherId}")
     public String deleteTeacher(@PathVariable("teacherId") Long teacherId){
         teacherService.deleteTeacher(teacherId);
         return "redirect:/teachers";
     }
 
-    // Handler method to handle view teacher request
-    @GetMapping("/teachers/{teacherId}/view")
-    public String viewTeacher(@PathVariable("teacherId") Long teacherId,
-                                 Model model){
-        TeacherDto teacherDto = teacherService.getTeacherById(teacherId);
-        model.addAttribute("teacher", teacherDto);
-        return "view_teacher";
-    }
 }

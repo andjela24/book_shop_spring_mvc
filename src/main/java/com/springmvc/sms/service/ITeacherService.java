@@ -9,6 +9,6 @@ public interface ITeacherService {
     TeacherDto createTeacher(TeacherDto teacherDto);
     List<TeacherDto> getAllTeachers();
     TeacherDto getTeacherById(Long teacherId);
-    TeacherDto updateTeacher(Long teacherId, TeacherDto teacherDto);
+    TeacherDto updateTeacher(TeacherDto teacherDto);
     void deleteTeacher(Long teacherId);
 }

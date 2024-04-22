@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,10 +12,11 @@
           crossorigin="anonymous">
     <title>Student Management System</title>
 </head>
+
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand mr-auto" th:href="@{/index}">SMS</a>
+        <a class="navbar-brand mr-auto"th:href="@{/index}">SMS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -68,64 +68,67 @@
     </div>
 </nav>
 
-<div class="container col-md-8 my-4">
+<div class="container my-4">
     <div class="card">
         <div class="card-header">
-            <h2 class="text-center"> Izmena studenta</h2>
+            <h2 class="text-center">Student Management System - SMS</h2>
         </div>
         <div class="card-body">
-            <form
-                    method="post"
-                    role="form"
-                    th:action="@{/students/{studentId}(studentId=${student.id})}"
-                    th:object="${student}"
-            >
-
-                <div class="form-group mb-3">
-                    <label class="form-label">Ime</label>
-                    <input
-                            class="form-control"
-                            id="firstName"
-                            name="firstName"
-                            placeholder="Unesi ime"
-                            type="text"
-                            th:field="*{firstName}"
-                    />
-                    <p th:if="${#fields.hasErrors('firstName')}" class="text-danger"
-                       th:errors="*{firstName}"></p>
+            <p>Dobro došli u SMS sistem. Sistem je namenj za jednostavno upravljanje studentima, profesorima i predmetima.</p>
+            <p>Aplikacija se sastoji od 5 entiteta:</p>
+            <ul>
+                <li>Student</li>
+                <li>Profesor</li>
+                <li>Predavanje</li>
+                <li>Predmet</li>
+                <li>Prisustvo</li>
+            </ul>
+            <p>Funkcionalnosti sistema su:</p>
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li>Kreiranje studenata</li>
+                        <li>Prikaz svih studenata</li>
+                        <li>Izmena studenta</li>
+                        <li>Brisanje studenta</li>
+                    </ul>
                 </div>
-                <div class="form-group mb-3">
-                    <label class="form-label">Prezime</label>
-                    <input
-                            class="form-control"
-                            id="lastName"
-                            name="lastName"
-                            placeholder="Unesi prezime"
-                            type="text"
-                            th:field="*{lastName}"
-                    />
-                    <p th:if="${#fields.hasErrors('lastName')}" class="text-danger"
-                       th:errors="*{lastName}"></p>
+                <div class="col">
+                    <ul>
+                        <li>Kreiranje profesora</li>
+                        <li>Prikaz svih profesora</li>
+                        <li>Izmena profesora</li>
+                        <li>Brisanje profesora</li>
+                    </ul>
                 </div>
-                <div class="form-group mb-3">
-                    <label class="form-label">Email</label>
-                    <input
-                            class="form-control"
-                            id="email"
-                            name="email"
-                            placeholder="Unesi email"
-                            type="email"
-                            th:field="*{email}"
-                    />
-                    <p th:if="${#fields.hasErrors('email')}" class="text-danger"
-                       th:errors="*{email}"></p>
+                <div class="col">
+                    <ul>
+                        <li>Kreiranje predmeta</li>
+                        <li>Prikaz svih predmeta</li>
+                        <li>Izmena predmeta</li>
+                        <li>Brisanje predmeta</li>
+                    </ul>
                 </div>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary" type="submit">Potvrdi</button>
+                <div class="col">
+                    <ul>
+                        <li>Kreiranje predavanja</li>
+                        <li>Prikaz svih predavanja</li>
+                        <li>Izmena predavanja</li>
+                        <li>Brisanje predavanja</li>
+                    </ul>
                 </div>
-            </form>
+                <div class="col">
+                    <ul>
+                        <li>Kreiranje prisustva</li>
+                        <li>Prikaz svih prisustva</li>
+                        <li>Izmena prisustva</li>
+                        <li>Brisanje prisustva</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </body>
+
 </html>

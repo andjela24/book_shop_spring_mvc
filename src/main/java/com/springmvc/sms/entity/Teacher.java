@@ -42,12 +42,4 @@ public class Teacher extends BaseEntity {
     )
     private List<Subject> subjects;
 
-    //Zbog mapiranja mora da postoji konstruktor bez id
-    public Teacher(String firstName, String lastName, String phoneNumber, String email, List<Subject> subjects) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.subjects = subjects;
-    }
 }

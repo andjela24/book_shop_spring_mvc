@@ -93,19 +93,10 @@ public class LessonController {
         return "redirect:/lessons";
     }
 
-    // Handler method to handle delete lesson request
     @GetMapping("/lessons/delete/{lessonId}")
     public String deleteLesson(@PathVariable("lessonId") Long lessonId){
         lessonService.deleteLesson(lessonId);
         return "redirect:/lessons";
     }
 
-    // Handler method to handle view lesson request
-    @GetMapping("/lessons/{lessonId}/view")
-    public String viewLesson(@PathVariable("lessonId") Long lessonId,
-                                 Model model){
-        LessonDto lessonDto = lessonService.getLessonById(lessonId);
-        model.addAttribute("lesson", lessonDto);
-        return "view_lesson";
-    }
 }

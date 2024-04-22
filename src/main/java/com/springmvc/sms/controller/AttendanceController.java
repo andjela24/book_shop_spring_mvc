@@ -98,11 +98,4 @@ public class AttendanceController {
         return "redirect:/attendances";
     }
 
-    @GetMapping("/attendances/{attendanceId}/view")
-    public String viewAttendance(@PathVariable("attendanceId") Long attendanceId,
-                                 Model model) {
-        AttendanceDto attendanceDto = attendanceService.getAttendanceById(attendanceId);
-        model.addAttribute("attendance", attendanceDto);
-        return "view_attendance";
-    }
 }
