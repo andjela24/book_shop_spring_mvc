@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2024 at 02:11 PM
+-- Generation Time: Apr 23, 2024 at 05:27 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `attendance` (
   `id` bigint(20) NOT NULL,
-  `created_at` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
-  `is_present` bit(1) NOT NULL,
+  `is_present` tinyint(1) DEFAULT 1,
   `lesson_id` bigint(20) DEFAULT NULL,
   `student_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -43,12 +43,12 @@ CREATE TABLE `attendance` (
 --
 
 INSERT INTO `attendance` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`, `is_present`, `lesson_id`, `student_id`) VALUES
-(13, '2024-04-19 12:01:52.000000', NULL, NULL, 1, b'1', 1, 2),
-(14, '2024-04-19 12:08:18.000000', NULL, NULL, 1, b'1', 1, 1),
-(15, '2024-04-19 12:09:56.000000', NULL, NULL, 1, b'1', 4, 10),
-(16, '2024-04-19 12:58:00.000000', NULL, NULL, 1, b'1', 8, 6),
-(17, '2024-04-22 10:05:31.000000', NULL, NULL, 1, b'1', 5, 13),
-(18, '2024-04-22 11:37:48.000000', NULL, '2024-04-22 11:45:58.000000', 2, b'1', 10, 2);
+(1, '2024-04-23 10:56:26', NULL, '2024-04-23 12:56:26.000000', 2, 1, 1, 1),
+(3, '2024-04-23 11:27:11', NULL, NULL, 1, 1, 2, 2),
+(4, '2024-04-23 15:26:59', NULL, NULL, 1, 0, 3, 3),
+(5, '2024-04-23 15:27:08', NULL, NULL, 1, 1, 5, 7),
+(6, '2024-04-23 15:27:17', NULL, NULL, 1, 0, 4, 8),
+(7, '2024-04-23 15:27:28', NULL, NULL, 1, 1, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ INSERT INTO `attendance` (`id`, `created_at`, `deleted_at`, `updated_at`, `versi
 
 CREATE TABLE `lesson` (
   `id` bigint(20) NOT NULL,
-  `created_at` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
@@ -72,19 +72,12 @@ CREATE TABLE `lesson` (
 --
 
 INSERT INTO `lesson` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`, `date`, `subject_id`, `teacher_id`) VALUES
-(1, '2024-04-18 14:44:43.423247', NULL, NULL, NULL, '2024-04-20 09:00:00.000000', 1, 1),
-(2, '2024-04-18 14:44:43.431924', NULL, NULL, NULL, '2024-04-20 10:30:00.000000', 2, 2),
-(3, '2024-04-18 14:44:43.435587', NULL, NULL, NULL, '2024-04-21 09:00:00.000000', 3, 3),
-(4, '2024-04-18 14:44:43.440983', NULL, NULL, NULL, '2024-04-21 10:30:00.000000', 4, 4),
-(5, '2024-04-18 14:44:43.444205', NULL, NULL, NULL, '2024-04-22 09:00:00.000000', 5, 5),
-(6, '2024-04-18 14:44:43.447310', NULL, NULL, NULL, '2024-04-22 09:00:00.000000', 6, 6),
-(7, '2024-04-18 14:44:43.451497', NULL, NULL, NULL, '2024-04-23 09:00:00.000000', 7, 7),
-(8, '2024-04-18 14:44:43.454659', NULL, NULL, NULL, '2024-04-23 09:00:00.000000', 8, 8),
-(9, '2024-04-18 14:44:43.457769', NULL, NULL, NULL, '2024-04-24 09:00:00.000000', 9, 9),
-(10, '2024-04-18 14:44:43.462088', NULL, NULL, NULL, '2024-04-24 09:00:00.000000', 10, 10),
-(11, '2024-04-22 10:51:25.000000', NULL, NULL, 1, '2024-04-22 10:51:25.000000', 1, 10),
-(12, '2024-04-22 10:52:04.000000', NULL, NULL, 1, '2024-04-22 10:52:04.000000', 10, 1),
-(13, '2024-04-22 10:53:09.000000', NULL, '2024-04-22 11:58:43.000000', 4, '2024-04-15 11:58:00.000000', 4, 10);
+(1, '2024-04-23 10:52:58', NULL, NULL, 1, '2024-04-15 12:52:00.000000', 10, 1),
+(2, '2024-04-23 11:26:54', NULL, NULL, 1, '2024-04-09 13:26:00.000000', 8, 2),
+(3, '2024-04-23 15:26:08', NULL, NULL, 1, '2024-04-11 14:25:00.000000', 8, 6),
+(4, '2024-04-23 15:26:19', NULL, NULL, 1, '2024-04-20 17:26:00.000000', 7, 5),
+(5, '2024-04-23 15:26:29', NULL, NULL, 1, '2024-04-15 17:26:00.000000', 2, 4),
+(6, '2024-04-23 15:26:40', NULL, NULL, 1, '2024-04-17 17:26:00.000000', 5, 3);
 
 -- --------------------------------------------------------
 
@@ -94,7 +87,7 @@ INSERT INTO `lesson` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`,
 
 CREATE TABLE `student` (
   `id` bigint(20) NOT NULL,
-  `created_at` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
@@ -108,17 +101,13 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`, `email`, `first_name`, `last_name`) VALUES
-(1, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student1@example.com', 'Marko', 'Petrović'),
-(2, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student2@example.com', 'Ana', 'Jovanović'),
-(3, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student3@example.com', 'Milica', 'Đorđević'),
-(4, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student4@example.com', 'Stefan', 'Nikolić'),
-(5, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student5@example.com', 'Jelena', 'Kostić'),
-(6, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student6@example.com', 'Nikola', 'Ilić'),
-(7, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student7@example.com', 'Sara', 'Stojanović'),
-(8, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student8@example.com', 'Filip', 'Milanović'),
-(9, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student9@example.com', 'Marija', 'Simić'),
-(10, '2024-04-18 10:23:49.965324', NULL, NULL, NULL, 'student10@example.com', 'Luka', 'Pavlović'),
-(13, '2024-04-19 14:44:48.000000', NULL, '2024-04-22 10:03:18.000000', 6, 'student1@example.comm', 'Markoo', 'Petrović');
+(1, '2024-04-23 10:51:52', NULL, NULL, 2, 'student1@example.comm', 'Ana', 'Anic'),
+(2, '2024-04-23 11:26:23', NULL, NULL, 2, 'student2@example.com', 'Nikola', 'Ilic'),
+(3, '2024-04-23 11:29:34', NULL, NULL, 2, 'student3@example.com', 'Stefan', 'Nikolic'),
+(4, '2024-04-23 11:30:24', NULL, NULL, 2, 'student4@example.com', 'Filip', 'Milanovic'),
+(5, '2024-04-23 11:30:57', NULL, NULL, 2, 'student5@example.comm', 'Jelena', 'Kostic'),
+(7, '2024-04-23 11:32:10', NULL, '2024-04-23 13:32:10.000000', 4, 'student6@example.com', 'Sara', 'Stojanovic'),
+(8, '2024-04-23 15:18:57', NULL, NULL, 2, 'student7@example.comm', 'Marko', 'Petrovic');
 
 -- --------------------------------------------------------
 
@@ -136,16 +125,21 @@ CREATE TABLE `student_subject` (
 --
 
 INSERT INTO `student_subject` (`student_id`, `subject_id`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
+(1, 2),
+(1, 7),
+(2, 8),
+(2, 9),
+(3, 4),
+(3, 6),
+(4, 3),
+(4, 9),
+(5, 2),
 (5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
+(7, 1),
+(7, 5),
+(7, 9),
+(8, 5),
+(8, 6);
 
 -- --------------------------------------------------------
 
@@ -155,7 +149,7 @@ INSERT INTO `student_subject` (`student_id`, `subject_id`) VALUES
 
 CREATE TABLE `subject` (
   `id` bigint(20) NOT NULL,
-  `created_at` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
@@ -167,17 +161,16 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`, `name`) VALUES
-(1, '2024-04-18 14:42:33.420184', NULL, NULL, NULL, 'Matematika'),
-(2, '2024-04-18 14:42:33.426770', NULL, NULL, NULL, 'Fizika'),
-(3, '2024-04-18 14:42:33.431783', NULL, NULL, NULL, 'Srpski jezik'),
-(4, '2024-04-18 14:42:33.434867', NULL, NULL, NULL, 'Istorija'),
-(5, '2024-04-18 14:42:33.437765', NULL, NULL, NULL, 'Biologija'),
-(6, '2024-04-18 14:42:33.440668', NULL, NULL, NULL, 'Engleski jezik'),
-(7, '2024-04-18 14:42:33.444845', NULL, NULL, NULL, 'Geografija'),
-(8, '2024-04-18 14:42:33.447746', NULL, NULL, NULL, 'Hemija'),
-(9, '2024-04-18 14:42:33.450683', NULL, NULL, NULL, 'Likovno'),
-(10, '2024-04-18 14:42:33.453755', NULL, NULL, NULL, 'Fizičko vaspitanje'),
-(11, '2024-04-22 12:10:29.000000', NULL, '2024-04-22 12:12:39.000000', 2, 'Psihologijaa');
+(1, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Matematika'),
+(2, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Srpski jezik'),
+(3, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Fizičko vaspitanje'),
+(4, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Istorija'),
+(5, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Biologija'),
+(6, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Geografija'),
+(7, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Engleski jezik'),
+(8, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Likovno'),
+(9, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Muzičko'),
+(10, '2024-04-23 10:51:28', NULL, NULL, NULL, 'Informatika');
 
 -- --------------------------------------------------------
 
@@ -187,7 +180,7 @@ INSERT INTO `subject` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`
 
 CREATE TABLE `teacher` (
   `id` bigint(20) NOT NULL,
-  `created_at` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
@@ -202,16 +195,12 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`id`, `created_at`, `deleted_at`, `updated_at`, `version`, `email`, `first_name`, `last_name`, `phone_number`) VALUES
-(1, '2024-04-18 14:40:21.933475', NULL, NULL, NULL, 'marko@example.com', 'Marko', 'Marković', '+38160123456'),
-(2, '2024-04-18 14:40:21.947505', NULL, NULL, NULL, 'ana@example.com', 'Ana', 'Anić', '+38161123456'),
-(3, '2024-04-18 14:40:21.952517', NULL, NULL, NULL, 'stefan@example.com', 'Stefan', 'Stefanović', '+38162123456'),
-(4, '2024-04-18 14:40:21.956895', NULL, NULL, NULL, 'marija@example.com', 'Marija', 'Marić', '+38163123456'),
-(5, '2024-04-18 14:40:21.961194', NULL, NULL, NULL, 'petar@example.com', 'Petar', 'Petrović', '+38164123456'),
-(6, '2024-04-18 14:40:21.965520', NULL, NULL, NULL, 'jelena@example.com', 'Jelena', 'Jelenić', '+38165123456'),
-(7, '2024-04-18 14:40:21.969828', NULL, NULL, NULL, 'nikola@example.com', 'Nikola', 'Nikolić', '+38166123456'),
-(8, '2024-04-18 14:40:21.974040', NULL, NULL, NULL, 'milica@example.com', 'Milica', 'Milić', '+38167123456'),
-(9, '2024-04-18 14:40:21.978304', NULL, NULL, NULL, 'dusan@example.com', 'Dušan', 'Dušanić', '+38168123456'),
-(10, '2024-04-18 14:40:21.982968', NULL, NULL, NULL, 'tamara@example.com', 'Tamara', 'Tamarović', '+38169123456');
+(1, '2024-04-23 10:52:26', NULL, NULL, 2, 'marko@exapmle.com', 'Marko', 'Markovic', '+38161123456'),
+(2, '2024-04-23 10:58:39', NULL, '2024-04-23 12:58:39.000000', 4, 'petar@example.com', 'Petar', 'Petrovic', '+38161123456'),
+(3, '2024-04-23 15:24:01', NULL, NULL, 2, 'jovan@example.com', 'Jovan', 'Jovanovic', '+38161123456'),
+(4, '2024-04-23 15:24:43', NULL, NULL, 2, 'milica@example.com', 'Milica', 'Milic', '+38161123456'),
+(5, '2024-04-23 15:25:06', NULL, NULL, 2, 'stefan@example.com', 'Stefan', 'Stefanovic', '+38161123456'),
+(6, '2024-04-23 15:25:46', NULL, NULL, 2, 'ivan@example.com', 'Ivan', 'Ivanovic', '+38161123456');
 
 -- --------------------------------------------------------
 
@@ -229,16 +218,19 @@ CREATE TABLE `teacher_subject` (
 --
 
 INSERT INTO `teacher_subject` (`teacher_id`, `subject_id`) VALUES
-(1, 1),
+(1, 7),
+(1, 10),
 (2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
+(3, 6),
+(3, 7),
+(3, 9),
+(4, 1),
+(4, 3),
+(4, 10),
+(5, 6),
+(5, 7),
+(6, 5),
+(6, 8);
 
 --
 -- Indexes for dumped tables
@@ -302,31 +294,31 @@ ALTER TABLE `teacher_subject`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `lesson`
 --
 ALTER TABLE `lesson`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
