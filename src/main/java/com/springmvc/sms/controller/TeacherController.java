@@ -1,6 +1,8 @@
 package com.springmvc.sms.controller;
 
+import com.springmvc.sms.dto.SubjectDto;
 import com.springmvc.sms.dto.TeacherDto;
+import com.springmvc.sms.service.impl.SubjectService;
 import com.springmvc.sms.service.impl.TeacherService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class TeacherController {
+
     private final TeacherService teacherService;
+    private final SubjectService subjectService;
 
     @GetMapping({"/teachers"})
     public String listTeachers(Model model){
@@ -28,9 +32,12 @@ public class TeacherController {
 
     @GetMapping("/teachers/new")
     public String newTeacher(Model model){
-        // teacher model object to store teacher form data
         TeacherDto teacherDto = new TeacherDto();
+        List<SubjectDto> subjectsList = subjectService.getAllSubjects();
+
         model.addAttribute("teacher", teacherDto);
+        model.addAttribute("subjectsList", subjectsList);
+
         return "create_teacher";
     }
 
@@ -51,7 +58,11 @@ public class TeacherController {
     public String editTeacher(@PathVariable("teacherId") Long teacherId,
                                  Model model){
         TeacherDto teacher = teacherService.getTeacherById(teacherId);
+        List<SubjectDto> subjectsList = subjectService.getAllSubjects();
+
         model.addAttribute("teacher", teacher);
+        model.addAttribute("subjectsList", subjectsList);
+
         return "edit_teacher";
     }
 

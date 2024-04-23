@@ -1,12 +1,9 @@
 package com.springmvc.sms.service.impl;
 
 import com.springmvc.sms.dto.TeacherDto;
-import com.springmvc.sms.dto.TeacherDto;
-import com.springmvc.sms.entity.Teacher;
 import com.springmvc.sms.entity.Teacher;
 import com.springmvc.sms.excetion.DataNotValidException;
 import com.springmvc.sms.excetion.ResourceNotFoundException;
-import com.springmvc.sms.mapper.TeacherMapper;
 import com.springmvc.sms.mapper.TeacherMapper;
 import com.springmvc.sms.repository.TeacherRepository;
 import com.springmvc.sms.service.ITeacherService;
@@ -32,7 +29,7 @@ public class TeacherService implements ITeacherService {
         if (teacherDto.getLastName().isEmpty() || teacherDto.getLastName().length() <= 1) {
             throw new DataNotValidException("Last Name must have 2 or more characters");
         }
-        if (teacherDto.getPhoneNumber().isEmpty()  || !teacherDto.getPhoneNumber().matches("^[0-9 ]+$")) {
+        if (teacherDto.getPhoneNumber().isEmpty()  || !teacherDto.getPhoneNumber().matches("^(\\+)(3816)([0-9]){6,9}$")) {
             throw new DataNotValidException("Phone number is not in a valid format");
         }
         if (teacherDto.getEmail().isEmpty() || !teacherDto.getEmail().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
@@ -43,6 +40,7 @@ public class TeacherService implements ITeacherService {
                 .lastName(teacherDto.getLastName())
                 .phoneNumber(teacherDto.getPhoneNumber())
                 .email(teacherDto.getEmail())
+                .subjects(teacherDto.getSubjects())
                 .build();
 
         teacherRepository.save(teacher);
@@ -55,10 +53,6 @@ public class TeacherService implements ITeacherService {
     public List<TeacherDto> getAllTeachers() {
         List<TeacherDto> foundTeachers = new ArrayList<>();
         List<Teacher> teachers = teacherRepository.findAll();
-
-        if (teachers.isEmpty()) {
-            throw new ResourceNotFoundException("List of teachers is empty");
-        }
 
         for (Teacher teacher : teachers) {
             TeacherDto teacherDto = TeacherMapper.mapToTeacherDto(teacher);
@@ -78,22 +72,21 @@ public class TeacherService implements ITeacherService {
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
         Teacher foundTeacher = teacherRepository.findById(teacherDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Entity whit id " + teacherDto.getId() + " could not be updated"));
-
         boolean isChanged = false;
 
-        if (teacherDto.getFirstName().isEmpty() || teacherDto.getFirstName().length() <= 1) {
+        if (teacherDto.getFirstName().isEmpty() || teacherDto.getFirstName().length() < 2) {
             throw new DataNotValidException("First Name must have 2 or more characters");
         } else {
             isChanged = true;
             foundTeacher.setFirstName(teacherDto.getFirstName());
         }
-        if (teacherDto.getLastName().isEmpty() || teacherDto.getLastName().length() <= 1) {
+        if (teacherDto.getLastName().isEmpty() || teacherDto.getLastName().length() < 2) {
             throw new DataNotValidException("Last Name must have 2 or more characters");
         } else {
             isChanged = true;
             foundTeacher.setLastName(teacherDto.getLastName());
         }
-        if (teacherDto.getPhoneNumber().isEmpty()  || !teacherDto.getPhoneNumber().matches("^[0-9 ]+$")) {
+        if (teacherDto.getPhoneNumber().isEmpty()  || !teacherDto.getPhoneNumber().matches("^(\\+)(3816)([0-9]){6,9}$")) {
             throw new DataNotValidException("Phone number is not in a valid format");
         }else {
             isChanged = true;
@@ -104,6 +97,10 @@ public class TeacherService implements ITeacherService {
         }else {
             isChanged = true;
             foundTeacher.setEmail(teacherDto.getEmail());
+        }
+        if(!teacherDto.getSubjects().isEmpty()){
+            isChanged = true;
+            foundTeacher.setSubjects(teacherDto.getSubjects());
         }
 
         if (isChanged) {

@@ -9,6 +9,7 @@ import com.springmvc.sms.commons.BaseEntity;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 @SuperBuilder(toBuilder = true)
 @Getter
@@ -41,5 +42,4 @@ public class Teacher extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private List<Subject> subjects;
-
 }

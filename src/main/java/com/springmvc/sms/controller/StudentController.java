@@ -1,7 +1,9 @@
 package com.springmvc.sms.controller;
 
 import com.springmvc.sms.dto.StudentDto;
+import com.springmvc.sms.dto.SubjectDto;
 import com.springmvc.sms.service.impl.StudentService;
+import com.springmvc.sms.service.impl.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,18 +18,27 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final SubjectService subjectService;
 
     @GetMapping({"/students"})
     public String listStudents(Model model) {
         List<StudentDto> students = studentService.getAllStudents();
+        List<SubjectDto> subjects = subjectService.getAllSubjects();
+
         model.addAttribute("students", students);
+        model.addAttribute("subjects", subjects);
+
         return "students";
     }
 
     @GetMapping("/students/new")
     public String newStudent(Model model) {
         StudentDto studentDto = new StudentDto();
+        List<SubjectDto> subjectsList = subjectService.getAllSubjects();
+
         model.addAttribute("student", studentDto);
+        model.addAttribute("subjectsList", subjectsList);
+
         return "create_student";
     }
 
@@ -48,7 +59,11 @@ public class StudentController {
     public String editStudent(@PathVariable("studentId") Long studentId,
                               Model model) {
         StudentDto student = studentService.getStudentById(studentId);
+        List<SubjectDto> subjectsList = subjectService.getAllSubjects();
+
         model.addAttribute("student", student);
+        model.addAttribute("subjectsList", subjectsList);
+
         return "edit_student";
     }
 
@@ -57,7 +72,6 @@ public class StudentController {
                                 @Valid @ModelAttribute("student") StudentDto studentDto,
                                 BindingResult result,
                                 Model model) {
-        studentDto.setId(studentId);
         if (result.hasErrors()) {
             model.addAttribute("student", studentDto);
             return "edit_student";

@@ -32,12 +32,11 @@ public class Student extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "student_subject",
-//            joinColumns = @JoinColumn(name = "student_id"),
-//            inverseJoinColumns = @JoinColumn(name = "subject_id")
-//    )
-//    private List<Subject> subjects;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "student_subject",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private List<Subject> subjects;
 }

@@ -26,7 +26,6 @@ public class Attendance extends BaseEntity {
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean isPresent;
-
+    @Column(name = "is_present", columnDefinition = "boolean default true")
+    private boolean present;
 }

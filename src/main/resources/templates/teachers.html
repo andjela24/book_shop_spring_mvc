@@ -92,6 +92,7 @@
             <th>Prezime</th>
             <th>Email</th>
             <th>Broj telefona</th>
+            <th>Predmeti</th>
             <th>Izmeni</th>
             <th>Obriši</th>
         </tr>
@@ -102,6 +103,7 @@
             <td th:text="${teacher.lastName}"></td>
             <td th:text="${teacher.email}"></td>
             <td th:text="${teacher.phoneNumber}"></td>
+            <td th:text="${teacher.subjects}"></td>
             <td>
                 <div class="d-flex justify-content-center">
                     <a th:href="@{/teachers/edit/{id}(id=${teacher.id})}" class="btn btn-primary btn-sm text-white">

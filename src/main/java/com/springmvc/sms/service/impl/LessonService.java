@@ -60,10 +60,6 @@ public class LessonService implements ILessonService {
         List<LessonDto> foundLessons = new ArrayList<>();
         List<Lesson> lessons = lessonRepository.findAll();
 
-        if (lessons.isEmpty()) {
-            throw new ResourceNotFoundException("List of lessons is empty");
-        }
-
         for (Lesson lesson : lessons) {
             LessonDto lessonDto = LessonMapper.mapToLessonDto(lesson);
             foundLessons.add(lessonDto);

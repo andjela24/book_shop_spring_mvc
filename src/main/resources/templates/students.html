@@ -91,6 +91,7 @@
             <th>Ime</th>
             <th>Prezime</th>
             <th>Email</th>
+            <th>Predmeti</th>
             <th>Izmeni</th>
             <th>Obriši</th>
         </tr>
@@ -100,6 +101,7 @@
             <td th:text="${student.firstName}"></td>
             <td th:text="${student.lastName}"></td>
             <td th:text="${student.email}"></td>
+            <td th:text="${student.subjects}"></td>
             <td>
                 <div class="d-flex justify-content-center">
                     <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-primary btn-sm text-white">

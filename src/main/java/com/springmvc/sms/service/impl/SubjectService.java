@@ -41,10 +41,6 @@ public class SubjectService implements ISubjectService {
         List<SubjectDto> foundSubjects = new ArrayList<>();
         List<Subject> subjects = subjectRepository.findAll();
 
-        if (subjects.isEmpty()) {
-            throw new ResourceNotFoundException("List of subjects is empty");
-        }
-
         for (Subject subject : subjects) {
             SubjectDto subjectDto = SubjectMapper.mapToSubjectDto(subject);
             foundSubjects.add(subjectDto);

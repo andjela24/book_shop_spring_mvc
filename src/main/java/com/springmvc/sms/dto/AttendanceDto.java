@@ -12,5 +12,5 @@ public class AttendanceDto {
     private Long id;
     private Student student;
     private Lesson lesson;
-    private boolean isPresent = true;
+    private boolean present;
 }

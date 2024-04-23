@@ -28,12 +28,6 @@ public class AttendanceService implements IAttendanceService {
 
     @Override
     public AttendanceDto createAttendance(AttendanceDto attendanceDto) {
-//        if (attendanceDto.getStudent() == null) {
-//            throw new DataNotValidException("Student must exists");
-//        }
-//        if (attendanceDto.getLesson() == null) {
-//            throw new DataNotValidException("Lesson must exists");
-//        }
 
         Student student = studentRepository.findById(attendanceDto.getStudent().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + attendanceDto.getStudent().getId()));
@@ -44,7 +38,7 @@ public class AttendanceService implements IAttendanceService {
         Attendance attendance = Attendance.builder()
                 .student(student)
                 .lesson(lesson)
-                .isPresent(attendanceDto.isPresent())
+                .present(attendanceDto.isPresent())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -58,10 +52,6 @@ public class AttendanceService implements IAttendanceService {
     public List<AttendanceDto> getAllAttendances() {
         List<AttendanceDto> foundAttendances = new ArrayList<>();
         List<Attendance> attendances = attendanceRepository.findAll();
-
-        if (attendances.isEmpty()) {
-            throw new ResourceNotFoundException("List of attendances is empty");
-        }
 
         for (Attendance attendance : attendances) {
             AttendanceDto attendanceDto = AttendanceMapper.mapToAttendanceDto(attendance);
